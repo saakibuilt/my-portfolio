@@ -1,0 +1,112 @@
+:root {
+  --bg: #07050f;
+  --ink: #f3eeff;
+  --dim: #a99fc8;
+  --sun: #ff9a52;
+  --pink: #ff5ea8;
+  --teal: #2ff0d0;
+  --violet: #b388ff;
+  --line: rgba(180,150,255,0.18);
+  --panel: rgba(18, 12, 34, 0.82);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { width: 100%; height: 100%; background: var(--bg); color: var(--ink);
+  font-family: "Space Grotesk", system-ui, sans-serif; overflow: hidden; }
+.hidden { display: none !important; }
+canvas { display: block; }
+
+#space { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0;
+  cursor: grab; touch-action: none; }
+#space:active { cursor: grabbing; }
+
+/* ===================== INTRO ===================== */
+#intro { position: fixed; inset: 0; z-index: 50; display: grid; place-items: center;
+  background: radial-gradient(120% 100% at 50% 30%, #1a0f33 0%, #07050f 60%, #030208 100%);
+  transition: opacity 1s ease, transform 1s ease; }
+#intro.gone { opacity: 0; transform: scale(1.1); pointer-events: none; }
+.intro-inner { text-align: center; padding: 0 22px; max-width: 940px; }
+
+/* typewriter block */
+.typed { min-height: clamp(180px, 34vh, 280px); display: flex; flex-direction: column;
+  align-items: center; justify-content: center; }
+.t-line { white-space: pre-wrap; display: inline-flex; align-items: baseline; }
+.t-kicker { font-family: "JetBrains Mono", monospace; font-size: clamp(11px,2.9vw,15px);
+  letter-spacing: 6px; text-transform: uppercase; margin-bottom: clamp(20px,4vw,34px); }
+.t-kicker .txt { color: var(--teal); }
+.t-name { font-family: "Orbitron", sans-serif; font-weight: 900;
+  font-size: clamp(42px, 11vw, 108px); line-height: 1; letter-spacing: 2px; }
+.t-name .txt { background: linear-gradient(120deg, var(--sun), var(--pink) 50%, var(--violet));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.t-role { margin-top: clamp(12px,2.5vw,20px); font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(14px, 3.6vw, 23px); letter-spacing: 2px; }
+.t-role .txt { color: var(--dim); }
+.caret { display: inline-block; margin-left: 3px; color: var(--teal);
+  -webkit-text-fill-color: var(--teal); animation: blink 1s step-end infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+.launch { margin-top: clamp(28px,5vw,44px); font-family: "Orbitron", sans-serif; font-weight: 700;
+  font-size: 15px; letter-spacing: 5px; color: #1a0a12; padding: 16px 42px; border: none;
+  border-radius: 100px; cursor: pointer; background: linear-gradient(90deg, var(--sun), var(--pink));
+  box-shadow: 0 0 40px rgba(255,94,168,.4);
+  opacity: 0; transform: translateY(18px); pointer-events: none;
+  transition: opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease, background .25s ease; }
+.launch.ready { opacity: 1; transform: translateY(0); pointer-events: auto;
+  animation: launchPulse 2.4s ease-in-out infinite; }
+.launch:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 0 60px rgba(255,154,82,.6); }
+.launch .bz { display: inline-block; margin-left: 6px; transition: transform .25s ease; }
+.launch:hover .bz { transform: translateX(5px); }
+@keyframes launchPulse { 0%,100% { box-shadow: 0 0 30px rgba(255,94,168,.35); } 50% { box-shadow: 0 0 60px rgba(255,154,82,.6); } }
+
+.hint { margin-top: 26px; font-size: 12px; letter-spacing: 1.5px; color: rgba(169,159,200,.6);
+  opacity: 0; transition: opacity .8s ease; }
+.hint.ready { opacity: 1; }
+
+/* ===================== HUD ===================== */
+#hud { position: fixed; inset: 0; z-index: 20; pointer-events: none;
+  opacity: 0; transition: opacity 1s ease; }
+#hud.show { opacity: 1; }
+
+.hud-tl { position: absolute; top: clamp(16px,4vw,28px); left: clamp(16px,4vw,32px); }
+.hud-name { font-family: "Orbitron"; font-weight: 700; font-size: clamp(12px,3vw,15px);
+  letter-spacing: 4px; }
+.hud-loc { margin-top: 6px; font-family: "JetBrains Mono", monospace; font-size: 12px;
+  letter-spacing: 2px; color: var(--teal); }
+
+.back { position: absolute; top: clamp(16px,4vw,28px); right: clamp(16px,4vw,32px);
+  pointer-events: auto; font-family: "JetBrains Mono", monospace; font-size: 12px;
+  letter-spacing: 2px; color: var(--ink); background: var(--panel); border: 1px solid var(--line);
+  padding: 11px 18px; border-radius: 100px; cursor: pointer; backdrop-filter: blur(10px);
+  transition: all .2s ease; }
+.back:hover { border-color: var(--pink); color: #fff; }
+
+/* planet quick-nav */
+#planetNav { position: absolute; bottom: clamp(20px,4vw,34px); left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 94vw;
+  padding: 9px 12px; border-radius: 100px; background: var(--panel); border: 1px solid var(--line);
+  backdrop-filter: blur(12px); pointer-events: auto; }
+#planetNav button { display: inline-flex; align-items: center; gap: 7px; background: none;
+  border: none; cursor: pointer; color: var(--dim); font-family: "Space Grotesk";
+  font-size: 12.5px; letter-spacing: .5px; padding: 7px 12px; border-radius: 100px;
+  transition: all .2s ease; white-space: nowrap; }
+#planetNav button .dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+#planetNav button:hover { color: var(--ink); background: rgba(255,255,255,.05); }
+#planetNav button.active { color: #fff; background: rgba(255,255,255,.08); }
+
+.hud-hint { position: absolute; bottom: clamp(74px,11vw,92px); left: 50%; transform: translateX(-50%);
+  font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 1.5px;
+  color: rgba(169,159,200,.55); text-align: center; width: max-content; max-width: 90vw; }
+
+/* image-panel tooltip */
+#tip { position: fixed; z-index: 30; pointer-events: none; padding: 8px 14px; border-radius: 10px;
+  background: var(--panel); border: 1px solid var(--line); backdrop-filter: blur(10px);
+  font-family: "JetBrains Mono", monospace; font-size: 12.5px; letter-spacing: .5px;
+  color: var(--ink); transform: translate(-50%, -150%); opacity: 0; transition: opacity .15s ease;
+  white-space: nowrap; }
+#tip.show { opacity: 1; }
+#tip small { display: block; margin-top: 3px; font-size: 10.5px; color: var(--teal); }
+
+@media (max-width: 640px) {
+  #planetNav button span { display: none; }
+  #planetNav button { padding: 9px; }
+  .hud-hint { display: none; }
+}
