@@ -347,7 +347,7 @@ function fit(){
   // headroom for labels/nodes + the top bar, so nothing ever gets cropped
   // room for rings, nodes and labels — tighter in portrait, where width is the limit
   const portrait = camera.aspect < 0.85;
-  const need = R * (portrait ? 1.62 : (viewH < 560 ? 1.86 : 1.76));
+  const need = R * (portrait ? 1.44 : (viewH < 560 ? 1.86 : 1.76));
   // pull the decorative rings in on narrow screens so they stay fully on-screen
   halo.scale.setScalar(portrait ? 0.86 : 1);
   halo2.scale.setScalar(portrait ? 0.97 : 1.12);
@@ -621,7 +621,7 @@ function updateLabels(){
     if (_v.z > 1){ lab.classList.remove("vis"); continue; }
     const cx = (_v.x*0.5+0.5)*viewW, cy = (-_v.y*0.5+0.5)*viewH;
     const w = lab.offsetWidth, h = lab.offsetHeight;
-    if (!w || !h){ lab.classList.add("vis"); continue; }   // measure on the next frame
+    if (!w || !h){ lab.classList.remove("vis"); continue; }  // not measured yet
     // the label tracks the object exactly — it is hidden rather than pinned to an edge
     if (cx - w/2 < 4 || cx + w/2 > viewW-4 || cy - h/2 < 4 || cy + h/2 > viewH-4){
       lab.classList.remove("vis"); continue;
