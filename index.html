@@ -18,33 +18,45 @@
   </script>
 </head>
 <body>
-  <canvas id="space"></canvas>
+  <div id="stage">
+    <!-- globe lives here; the panel takes the remaining space -->
+    <div id="globeWrap">
+      <canvas id="space"></canvas>
+      <div id="labels"></div>
+      <div id="globeHint" class="globe-hint">drag to rotate · tap a marker to open</div>
+    </div>
 
-  <!-- ===== INTRO ===== -->
+    <!-- responsive content panel: side column on wide screens, sheet on small -->
+    <aside id="panel" class="panel" aria-hidden="true">
+      <header class="panel-head">
+        <div class="panel-eyebrow"><span class="panel-dot"></span><span id="panelKicker">SECTION</span></div>
+        <h2 id="panelTitle">Title</h2>
+        <button id="panelClose" class="panel-close" aria-label="Close">✕</button>
+      </header>
+      <div id="panelBody" class="panel-body"></div>
+    </aside>
+  </div>
+
+  <!-- top bar -->
+  <header id="topbar" class="topbar hidden">
+    <div class="brand">
+      <div class="brand-name">SAKSHAM NIRULA</div>
+      <div class="brand-role">Business Analyst · A.I. Enthusiast</div>
+    </div>
+    <nav id="nav" class="nav"></nav>
+    <button id="navToggle" class="nav-toggle" aria-label="Sections">☰</button>
+  </header>
+
+  <!-- intro -->
   <section id="intro">
     <div class="intro-inner">
       <div id="typed" class="typed"></div>
-      <button id="launch" class="launch">LAUNCH <span class="bz">▸</span></button>
-      <div id="introHint" class="hint">drag to orbit · scroll to zoom · click a planet to explore</div>
+      <button id="launch" class="launch">ENTER <span class="bz">▸</span></button>
+      <div id="introHint" class="hint">one world · seven places to explore</div>
     </div>
   </section>
 
-  <!-- ===== HUD (minimal, 3D-first) ===== -->
-  <div id="hud" class="hidden">
-    <div class="hud-tl">
-      <div class="hud-name">SAKSHAM NIRULA</div>
-      <div class="hud-loc" id="focusName">SYSTEM VIEW</div>
-    </div>
-
-    <button id="backBtn" class="back hidden">◂ SYSTEM</button>
-
-    <nav id="planetNav"></nav>
-
-    <div class="hud-hint" id="hudHint">drag to orbit · scroll to zoom · click a planet</div>
-  </div>
-
-  <div id="tip"></div>
-
+  <div id="tip" class="tip"></div>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
